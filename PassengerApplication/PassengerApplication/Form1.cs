@@ -28,5 +28,11 @@ namespace PassengerApplication
             Login login = new Login();
             login.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            EmployeeLogin employeeLogin = new EmployeeLogin();
+            employeeLogin.Show();
+        }
     }
 }

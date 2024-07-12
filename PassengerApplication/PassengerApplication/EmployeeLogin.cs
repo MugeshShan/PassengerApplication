@@ -11,19 +11,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace PassengerApplication
 {
-    public partial class Login : Form
+    public partial class EmployeeLogin : Form
     {
-        public Login()
+        public EmployeeLogin()
         {
             InitializeComponent();
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -37,12 +31,12 @@ namespace PassengerApplication
             }
             else
             {
-                List<Passengers> customers = new List<Passengers>();
+                List<Employee> customers = new List<Employee>();
                 OleDbConnection oleDbConnection = new OleDbConnection();
                 oleDbConnection.ConnectionString = ConfigurationManager.AppSettings["Railway"];
 
 
-                var command = "Select * from Users Where role=2";
+                var command = "Select * from Employee";
                 OleDbDataAdapter adapter = new OleDbDataAdapter();
                 OleDbCommand command2 = new OleDbCommand(command, oleDbConnection);
                 adapter.SelectCommand = command2;
@@ -52,12 +46,13 @@ namespace PassengerApplication
                 foreach (DataRow dr in dt.Rows)
                 {
 
-                    var tempUser = new Passengers
+                    var tempUser = new Employee
                     {
-                        Id = Convert.ToInt32(dr["PassengerID"]),
-                        Username = dr["username"].ToString(),
-                        Password = dr["password"].ToString(),
-                        FirstName = dr["first_name"].ToString()
+                        Id = Convert.ToInt32(dr["ID"]),
+                        Username = dr["Username"].ToString(),
+                        Password = dr["Password"].ToString(),
+                        Name = dr["FirstName"].ToString(),
+                        Email = dr["Email"].ToString()
                     };
                     if (tempUser != null)
                     {
@@ -69,10 +64,10 @@ namespace PassengerApplication
                 {
                     if (textBox1.Text == cust.Username && maskedTextBox1.Text == cust.Password)
                     {
-                        MessageBox.Show("Welcome " + cust.FirstName + "!!!");
+                        MessageBox.Show("Welcome " + cust.Name + "!!!");
                         oleDbConnection.Close();
-                        Utility.Customer = cust;
-                        TrainListPage page = new TrainListPage();
+                        Utility.Employee = cust;
+                        EmployeePage page = new EmployeePage();
                         page.Show();
                         this.Close();
                     }
